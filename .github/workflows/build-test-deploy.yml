@@ -179,11 +179,11 @@ jobs:
       - build-executable-aarch64
 
     steps:
-     - name: Start Measurement
-       uses: DaxLynch/eco-ci-energy-estimation@main
-       with:
-         task: start-measurement
-         api-endpoint-add: ${{ secrets.POSTGREST_ENDPOINT }}
+      - name: Start Measurement
+        uses: DaxLynch/eco-ci-energy-estimation@main
+        with:
+          task: start-measurement
+          api-endpoint-add: ${{ secrets.POSTGREST_ENDPOINT }}
         
       - name: Checkout Code
         uses: actions/checkout@v3
