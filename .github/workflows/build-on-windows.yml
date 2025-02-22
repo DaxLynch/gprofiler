@@ -1,11 +1,19 @@
 name: Build gProfiler on Windows
 
-on: pull_request
+on: 
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build-executable:
    runs-on: windows-latest
    steps:
+      - name: Start Measurement
+        uses: DaxLynch/eco-ci-energy-estimation@main 
+        with:
+          task: start-measurement
+          api-endpoint-add: ${{ secrets.POSTGREST_ENDPOINT }}
+          json-output: true
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
@@ -16,3 +24,10 @@ jobs:
 
       - name: check gprofiler build
         run: .\app\dist\gprofiler.exe -h
+        
+      - name: Build and deploy GProfiler
+        uses: DaxLynch/eco-ci-energy-estimation@main 
+        with:
+          task: get-measurement
+          label: 'Build and deploy GProfiler'
+
